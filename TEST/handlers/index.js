@@ -5,6 +5,11 @@ const {
   updatePc,
   remove,
 } = require("../pkg/portable-computer");
+const {
+  computerCreate,
+  computerUpdate,
+  validate,
+} = require("../pkg/portable-computer/validate");
 
 const listAll = async (req, res) => {
   try {
@@ -13,14 +18,19 @@ const listAll = async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 };
+
 const add = async (req, res) => {
   try {
+    await validate(req.body, computerCreate);
+
     const pc = await create(req.body);
     return res.status(201).send(pc);
   } catch (error) {
+    console.error(error);
     return res.status(500).send("Internal Server Error");
   }
 };
+
 const listOne = async (req, res) => {
   try {
     const pc = await listOnePc(req.params.id);
@@ -33,6 +43,8 @@ const listOne = async (req, res) => {
 };
 const update = async (req, res) => {
   try {
+    await validate(req.body, computerCreate);
+
     const up = await updatePc(req.params.id, req.body);
     return res.status(204).send(" ");
   } catch (error) {
@@ -40,14 +52,18 @@ const update = async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 };
+
 const updatePartial = async (req, res) => {
   try {
+    await validate(req.body, computerUpdate);
+
     const up = await updatePc(req.params.id, req.body);
     return res.status(204).send(" ");
   } catch (error) {
     return res.status(500).send("Internal Server Error");
   }
 };
+
 const deleteUser = async (req, res) => {
   try {
     await remove(req.params.id);
