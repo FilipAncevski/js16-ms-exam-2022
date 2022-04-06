@@ -14,11 +14,11 @@ const {
 const app = express();
 
 app.use(express.json());
-app.use(
-  jwt({ secret: get("service").jwt_key, algorithms: ["HS256"] }).unless({
-    path: ["/api/v1/portable-computer"],
-  })
-);
+// app.use(
+//   jwt({ secret: get("service").jwt_key, algorithms: ["HS256"] }).unless({
+//     path: ["/api/v1/portable-computer"],
+//   })
+// );
 
 app.get("/api/v1/portable-computer", listAll);
 app.post("/api/v1/portable-computer", add);
@@ -27,11 +27,11 @@ app.put("/api/v1/portable-computer/:id", update);
 app.patch("/api/v1/portable-computer/:id", updatePartial);
 app.delete("/api/v1/portable-computer/:id", deleteUser);
 
-app.use(function (err, req, res, next) {
-  if (err.name === "UnauthorizedError") {
-    res.status(401).send("invalid token...");
-  }
-});
+// app.use(function (err, req, res, next) {
+//   if (err.name === "UnauthorizedError") {
+//     res.status(401).send("invalid token...");
+//   }
+// });
 
 app.listen(get("service").port, (err) => {
   if (err) throw err;
