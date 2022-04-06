@@ -35,7 +35,7 @@ const create = async (info) => {
 
 const listOnePc = async (id) => {
   try {
-    return await Computer.findOne({ _id: id });
+    return await Computer.find({ _id: id });
   } catch (error) {
     throw error;
   }
